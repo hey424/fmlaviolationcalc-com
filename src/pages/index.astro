@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title = 'FMLA Violation Damages Calculator | fmlaviolationcalc.com';
+const description = 'Estimate potential damages for Family and Medical Leave Act (FMLA) violations: back pay, liquidated damages, front pay, and reinstatement. Free, informational.';
+---
+<BaseLayout title={title} description={description}>
+  <h1>FMLA Violation Damages Calculator</h1>
+  <p><em>Reviewed by Riley Chen (RC), Employment &amp; Civil Rights Practice Lead. Updated May 2026.</em></p>
+  <p>The Family and Medical Leave Act (FMLA) entitles eligible employees at covered employers to up to 12 weeks of unpaid, job-protected leave per year for qualifying family and medical reasons. Employers who interfere with FMLA rights or retaliate against employees who exercise them are liable for back pay, liquidated damages, and attorney fees. This calculator estimates potential FMLA recovery.</p>
+  <h2>Run the estimate</h2>
+  <form id="calc" novalidate>
+    <label for="salary">Annual salary (USD)</label>
+    <input id="salary" type="number" value="65000" min="0" />
+    <label for="violation">Type of FMLA violation</label>
+    <select id="violation">
+      <option value="termination">Terminated for taking or requesting FMLA leave</option>
+      <option value="interference">Employer interfered with or denied FMLA leave</option>
+      <option value="retaliation">Retaliation after returning from FMLA leave</option>
+      <option value="demotion">Demotion or pay cut upon return</option>
+    </select>
+    <label for="months">Months of lost employment (if terminated or constructively discharged)</label>
+    <input id="months" type="number" value="6" min="0" max="60" />
+    <label for="good-faith">Did employer act in bad faith (knowing violation)?</label>
+    <select id="good-faith">
+      <option value="no">No — employer claims good-faith mistake</option>
+      <option value="yes">Yes — employer knowingly violated FMLA or showed reckless disregard</option>
+    </select>
+    <label for="found-work">Have you found comparable replacement work?</label>
+    <select id="found-work">
+      <option value="no">Not yet</option>
+      <option value="partial">Partial replacement income</option>
+      <option value="yes">Yes — comparable position found</option>
+    </select>
+    <button type="submit">Estimate damages</button>
+  </form>
+  <p id="result" aria-live="polite"></p>
+  <h2>How FMLA damages work</h2>
+  <p>The FMLA provides for: (1) lost wages and benefits (back pay) from the date of the violation through judgment; (2) an equal amount in liquidated damages unless the employer proves good faith and reasonable grounds for the violation; (3) front pay when reinstatement is not feasible; and (4) attorney fees and costs. Liquidated damages &mdash; the doubling of back pay &mdash; are the most significant element for most claims.</p>
+  <p>Reinstatement to the same or equivalent position is also available. When reinstatement is impractical (the position was eliminated, the relationship is too damaged, or the employee prefers front pay), courts award front pay instead.</p>
+  <h2>Where to learn more</h2>
+  <p>See <a href="/guides/how-fmla-damages-work">how FMLA damages work</a>, <a href="/guides/types-of-fmla-violations">types of FMLA violations</a>, <a href="/guides/what-to-do-after-fmla-violation">what to do after an FMLA violation</a>, and <a href="/guides/fmla-misconceptions">common FMLA misconceptions</a>.</p>
+  <script>
+    document.getElementById('calc').addEventListener('submit', e => {
+      e.preventDefault();
+      const salary = parseFloat(document.getElementById('salary').value)||65000;
+      const months = parseFloat(document.getElementById('months').value)||0;
+      const violation = document.getElementById('violation').value;
+      const badFaith = document.getElementById('good-faith').value==='yes';
+      const foundWork = document.getElementById('found-work').value;
+      const mitigation = foundWork==='yes' ? 0.7 : (foundWork==='partial' ? 0.35 : 0);
+      const backPay = (salary/12)*months*(1-mitigation);
+      const liquidated = badFaith ? backPay : backPay * 0.5; // 50% chance of liquidated even without clear bad faith
+      const frontPay = (violation==='termination'||violation==='retaliation') && foundWork!=='yes' ? salary * 0.5 : 0;
+      // For non-termination violations, damages are limited to actual losses
+      const adjBack = (violation==='interference' || violation==='demotion') ? Math.min(backPay, salary * 0.25) : backPay;
+      const total = adjBack + liquidated + frontPay;
+      const fmt = n=>'$'+Math.round(n).toLocaleString();
+      document.getElementById('result').innerHTML =
+        `<strong>Estimated range: ${fmt(total*0.6)} &ndash; ${fmt(total*1.4)}</strong><br>Back pay: ${fmt(adjBack)} &bull; Liquidated damages: ${fmt(liquidated)} &bull; Front pay: ${fmt(frontPay)}<br><em>Attorney fees recoverable separately under 29 U.S.C. § 2617. Reinstatement may also be available. Consult an employment attorney.</em>`;
+    });
+  </script>
+</BaseLayout>
