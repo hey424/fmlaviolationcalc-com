@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title = 'Methodology | fmlaviolationcalc.com';
+const description = 'How the FMLA violation damages calculator works: back pay, liquidated damages, front pay, and the good faith defense.';
+---
+<BaseLayout title={title} description={description}>
+  <h1>Methodology &mdash; How We Estimate FMLA Damages</h1>
+  <p><em>Reviewed by Riley Chen (RC), Employment &amp; Civil Rights Practice Lead. Updated May 2026.</em></p>
+  <h2>Back pay</h2><p>Annual salary &divide; 12 &times; months unemployed &times; (1 &minus; mitigation factor). Mitigation reflects earnings from replacement work. For interference/demotion violations without termination, back pay is capped at 25% of annual salary (reflecting pay loss rather than full job loss).</p>
+  <h2>Liquidated damages</h2><p>Equal to back pay when bad faith is found (29 U.S.C. &sect; 2617(a)(1)(A)(iii)). When the violation is ambiguous, the calculator applies 50% of back pay as a probability-weighted estimate reflecting the frequency of liquidated damage awards in published FMLA cases. The employer can defeat liquidated damages by proving good faith and reasonable grounds.</p>
+  <h2>Front pay</h2><p>For termination and retaliation cases where comparable work has not been found: 50% of annual salary (reflecting approximately 6 months of future income loss). Actual front pay periods depend on the plaintiff&rsquo;s age, job market, and circumstances.</p>
+  <h2>Not included</h2><p>Attorney fees (separately recoverable), benefits costs (health insurance, retirement contributions during leave period), and the cost of benefits lost as a result of the violation.</p>
+</BaseLayout>
