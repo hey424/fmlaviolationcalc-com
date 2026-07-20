@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadCapture from '../components/LeadCapture.astro';
 const title = 'FMLA Violation Damages Calculator | fmlaviolationcalc.com';
 const description = 'Estimate potential damages for Family and Medical Leave Act (FMLA) violations: back pay, liquidated damages, front pay, and reinstatement. Free, informational.';
 ---
@@ -33,14 +34,17 @@ const description = 'Estimate potential damages for Family and Medical Leave Act
     </select>
     <button type="submit">Estimate damages</button>
   </form>
-  <p id="result" aria-live="polite"></p>
+  
+
+  <LeadCapture caseType="fmla_violation" caseTypeLabel="FMLA Violation" />
+<p id="result" aria-live="polite"></p>
   <h2>How FMLA damages work</h2>
   <p>The FMLA provides for: (1) lost wages and benefits (back pay) from the date of the violation through judgment; (2) an equal amount in liquidated damages unless the employer proves good faith and reasonable grounds for the violation; (3) front pay when reinstatement is not feasible; and (4) attorney fees and costs. Liquidated damages &mdash; the doubling of back pay &mdash; are the most significant element for most claims.</p>
   <p>Reinstatement to the same or equivalent position is also available. When reinstatement is impractical (the position was eliminated, the relationship is too damaged, or the employee prefers front pay), courts award front pay instead. The FMLA&rsquo;s two-year statute of limitations (three years for willful violations) runs from the date of the violation, making prompt action important for preserving full recovery.</p>
   <h2>Understanding your estimate</h2>
   <p>The calculator applies the statutory damage framework from 29 U.S.C. &sect; 2617: back pay adjusted for mitigation, a liquidated damages component based on whether bad faith is found, and a front pay estimate for termination cases without replacement employment. The range output (60%&ndash;140% of the base estimate) reflects the inherent uncertainty in FMLA damages, which depend heavily on how quickly the employee finds new work, how a jury assesses bad faith, and how a judge calculates front pay. For interference and demotion cases without termination, back pay is capped at 25% of annual salary reflecting actual wage losses rather than full employment loss. Consult an employment attorney for a case-specific evaluation.</p>
   <h2>Where to learn more</h2>
-  <p>See <a href="/guides/how-fmla-damages-work">how FMLA damages work</a>, <a href="/guides/types-of-fmla-violations">types of FMLA violations</a>, <a href="/guides/what-to-do-after-fmla-violation">what to do after an FMLA violation</a>, and <a href="/guides/fmla-misconceptions">common FMLA misconceptions</a>. The <a href="/faq">FAQ</a> covers eligibility, intermittent leave, and filing deadlines.</p>
+  <p>See <a href="/guides/how-fmla-damages-work/">how FMLA damages work</a>, <a href="/guides/types-of-fmla-violations/">types of FMLA violations</a>, <a href="/guides/what-to-do-after-fmla-violation/">what to do after an FMLA violation</a>, and <a href="/guides/fmla-misconceptions/">common FMLA misconceptions</a>. The <a href="/faq/">FAQ</a> covers eligibility, intermittent leave, and filing deadlines.</p>
   <script>
     document.getElementById('calc').addEventListener('submit', e => {
       e.preventDefault();
